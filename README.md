@@ -11,7 +11,7 @@ Each sub-directory contains the build.sh script for building the given lazarus v
 - trunk: lazarus trunk, fpc stable (according to fpcup)
 - experimental: lazarus trunk, fpc trunk
 
-The images can be build using `./build.sh subdirectory` e.g. `./build.sh 2.0`. To build all images multithreaded via gnu parallel use `build_all.sh` (requires gnu parallel)
+The images can be build using `./build.sh subdirectory` e.g. `./build.sh 2.0`. To build all images use `build_all.sh`
 
 ## Extending
 To extend this with a new version, simply create a new directory with the tag name (e.g. `fixes2.0`) and add a `build.sh` (with execution rights) which builds the fpc and lazarus version to `~/development/[fpc|lazarus]`. E.g.
