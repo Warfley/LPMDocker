@@ -17,7 +17,7 @@ RUN /install/$tag/build.sh
 RUN rm -rf /install
 
 # Install lpm
-RUN git clone https://github.com/Warfley/LazarusPackageManager.git /opt/lpm && ln -s /opt/lpm/lpm /usr/bin/lpm
+RUN git clone --depth 1 https://github.com/Warfley/LazarusPackageManager.git /opt/lpm && ln -s /opt/lpm/lpm /usr/bin/lpm
 
 # Configure lpm
 RUN lpm lazarus add stable /root/development/lazarus
