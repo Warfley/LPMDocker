@@ -1,7 +1,7 @@
 #!/bin/bash
 
-FPC=3.0.4
-LAZ=2.0.12
+FPC=3.2.2
+LAZ=2.2.4
 
 function build() {
     fpcup --noconfirm --fpcURL=$FPC --lazURL=$LAZ $@

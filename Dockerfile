@@ -4,10 +4,24 @@ FROM debian:stable
 ARG tag
 
 # Install prequesites
-RUN apt-get update && apt-get install --yes build-essential git wget unzip subversion bzip2 python3 libx11-dev libgtk2.0-dev libgdk-pixbuf2.0-dev libcairo2-dev libpango1.0-dev
+RUN apt-get update && \
+    apt-get install --yes build-essential \
+                          git \
+                          wget \
+                          unzip \
+                          subversion \
+                          bzip2 \
+                          python3 \
+                          libx11-dev \
+                          libgtk2.0-dev \
+                          libgdk-pixbuf2.0-dev \
+                          libcairo2-dev \
+                          libpango1.0-dev \
+    && rm -rf /var/lib/apt/lists/* /var/cache/apt
 
 # Install fpcup
 COPY . /install
+
 RUN /install/install_fpcup.sh
 
 # Install lazarus and fpc
