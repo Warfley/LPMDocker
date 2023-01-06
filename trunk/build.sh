@@ -3,16 +3,7 @@
 FPC=stable
 LAZ=trunk
 
-function build() {
-    fpcup --noconfirm --fpcURL=$FPC --lazURL=$LAZ $@
-}
-function buildCross() {
-    cpu="$1"
-    shift
-    os="$1"
-    shift
-    build --only=FPCBuildOnly --cputarget=$cpu --ostarget=$os $@
-}
+source ../build_funcs.sh
 
 # Install fpc and lazars for linux x86_64
 build
@@ -20,3 +11,5 @@ build
 buildCross i386 win32
 # Install cross-compiler for win64
 buildCross x86_64 win64
+# Cleaning up for slim images
+buildCleanup

@@ -6,6 +6,7 @@ ARG tag
 # Install prequesites
 RUN apt-get update && \
     apt-get install --yes build-essential \
+                          sudo \
                           git \
                           wget \
                           unzip \
@@ -17,21 +18,31 @@ RUN apt-get update && \
                           libgdk-pixbuf2.0-dev \
                           libcairo2-dev \
                           libpango1.0-dev \
+                          libqt5pas-dev \
     && rm -rf /var/lib/apt/lists/* /var/cache/apt
 
-# Install fpcup
 COPY . /install
 
-RUN /install/install_fpcup.sh
+# Install fpc and lazarus
+RUN /install/install_fpcup.sh \
+ && cd /install/$tag \
+ && ./build.sh \
+ && cd / \
+ && rm -rf /install
 
-# Install lazarus and fpc
-RUN /install/$tag/build.sh
-
-# Clean up the stuff we don't need anymore
-RUN rm -rf /install
+RUN groupadd -g 531 lazarus \
+ && chown -R :lazarus /fpclaz \
+ && chmod -R g+w /fpclaz
 
 # Install lpm
-RUN git clone --depth 1 https://github.com/Warfley/LazarusPackageManager.git /opt/lpm && ln -s /opt/lpm/lpm /usr/bin/lpm
+RUN git clone --depth 1 https://github.com/Warfley/LazarusPackageManager.git /opt/lpm \
+ && ln -s /opt/lpm/lpm /usr/bin/lpm
 
-# Configure lpm
-RUN lpm lazarus add stable /root/development/lazarus
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENV UID=1000
+ENV GID=1000
+
+ENTRYPOINT [ "/entrypoint.sh" ]
+CMD "bash"
